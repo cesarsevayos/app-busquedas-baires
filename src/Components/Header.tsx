@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUser, SignOutButton, UserButton } from "@clerk/clerk-react";
+import { useUser, SignOutButton } from "@clerk/clerk-react";
 import { ModalLogin } from "./ModalLogin";
 
 interface HeaderProps {
@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header = ({ showSearch = false }: HeaderProps) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const { isSignedIn, user } = useUser(); // Clerk hook
+  const { isSignedIn, user } = useUser();
 
   return (
     <header className="h-16 flex items-center justify-between px-4 py-2 shadow border-b bg-white font-roboto">
@@ -38,18 +38,14 @@ const Header = ({ showSearch = false }: HeaderProps) => {
           </>
         ) : (
           <>
-            {/* Avatar del usuario */}
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                elements: {
-                  userButtonPopoverFooter: "hidden", // Oculta el footer (donde está "Manage account")
-                  userButtonPopoverActionButton__signOut: "hidden", // Oculta el botón "Sign out"
-                },
-              }}
+            {/* Avatar sin menú interactivo */}
+            <img
+              src={user?.imageUrl}
+              alt="Avatar"
+              className="w-10 h-10 rounded-full border border-gray-300"
             />
 
-            {/* Botón opcional de cerrar sesión explícito */}
+            {/* Botón cerrar sesión propio */}
             <SignOutButton>
               <button className="text-red-500 border px-3 py-1 rounded hover:bg-red-50 transition">
                 Cerrar sesión

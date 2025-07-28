@@ -1,12 +1,13 @@
-import { SignIn } from "@clerk/clerk-react";
+import { SignIn, useUser, SignOutButton, UserButton } from "@clerk/clerk-react";
 
-export const ModalLogin = ({
-  isOpen,
-  onClose,
-}: {
+interface ModalLoginProps {
   isOpen: boolean;
   onClose: () => void;
-}) => {
+}
+
+export const ModalLogin = ({ isOpen, onClose }: ModalLoginProps) => {
+  const { isSignedIn } = useUser();
+
   if (!isOpen) return null;
 
   return (
@@ -19,32 +20,45 @@ export const ModalLogin = ({
           ✕
         </button>
 
-        <h2 className="text-2xl font-semibold mb-6 text-center">
-          Ingresá para descubrir Buenos Aires
-        </h2>
-
-        <SignIn
-          routing="virtual"
-          appearance={{
-            elements: {
-              // Ajustes visuales
-              card: 'bg-white shadow-none',
-              headerTitle: 'hidden',
-              headerSubtitle: 'hidden',
-
-              // Botones sociales
-              socialButtonsBlockButton:
-                'w-full py-3 text-base rounded-xl border border-gray-300 mb-3 font-roboto hover:bg-gray-100 transition',
-
-              // Separador "o continúa con correo"
-              dividerText: 'text-gray-400',
-
-              // Campos input (si activás email más adelante)
-              formFieldInput:
-                'w-full px-4 py-2 border rounded-xl font-roboto text-sm',
-            },
-          }}
-        />
+        {!isSignedIn ? (
+          <>
+            <h2 className="text-2xl font-semibold mb-6 text-center">
+              Ingresá para descubrir Buenos Aires
+            </h2>
+            <SignIn
+              routing="virtual"
+              appearance={{
+                elements: {
+                  card: "bg-white shadow-none",
+                  headerTitle: "hidden",
+                  headerSubtitle: "hidden",
+                  socialButtonsBlockButton:
+                    "w-full py-3 text-base rounded-xl border border-gray-300 mb-3 font-roboto hover:bg-gray-100 transition",
+                  dividerText: "text-gray-400",
+                  formFieldInput:
+                    "w-full px-4 py-2 border rounded-xl font-roboto text-sm",
+                },
+              }}
+            />
+          </>
+        ) : (
+          <div className="flex flex-col items-center gap-4 mt-4">
+            <UserButton
+              afterSignOutUrl="/"
+              appearance={{
+                elements: {
+                  userButtonPopoverFooter: "hidden",
+                  userButtonPopoverActionButton__signOut: "hidden",
+                },
+              }}
+            />
+            <SignOutButton>
+              <button className="text-red-500 border px-4 py-2 rounded hover:bg-red-50 transition">
+                Cerrar sesión
+              </button>
+            </SignOutButton>
+          </div>
+        )}
       </div>
     </div>
   );
