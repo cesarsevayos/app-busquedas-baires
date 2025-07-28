@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bienvenido</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+<script>
+  document.addEventListener("mouseout", function(event) {
+    // Verificar si el cursor del mouse ha salido de la página
+    if (event.toElement === null && event.relatedTarget === null) {
+      // Cambiar el título del documento
+      document.title = "¡Adiós! Vuelve pronto 👋";
+    }
+  });
+  document.addEventListener("mouseover", function(event) {
+      // Verificar si el cursor del mouse ha vuelto a la página
+      if (event.fromElement === null && event.relatedTarget === null) {
+        // Restaurar el título del documento
+        document.title = "Bienvenido";
+      }
+    });
+</script>
