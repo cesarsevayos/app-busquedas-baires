@@ -1,36 +1,97 @@
-// import { useState } from "react";
-
-const comments = [
-  {
-    name: "Lucía",
-    date: "Aug 19, 2021",
-    comment:
-      "Me mudé a Palermo hace dos años y no lo cambio por nada. Tiene todo: buenos parques, una gran oferta gastronómica y está bien conectado...",
-    stars: 4,
-    avatar: "src/assets/images/image5.jpg",
-  },
-  {
-    name: "Matín",
-    date: "Aug 19, 2021",
-    comment:
-      "Palermo es inspiración pura. Las calles llenas de arte urbano, las cafeterías con estilo propio y la mezcla entre lo moderno y lo clásico...",
-    stars: 4,
-    avatar: "src/assets/images/image5.jpg",
-  },
-  {
-    name: "Sofía",
-    date: "Aug 19, 2021",
-    comment:
-      "Palermo tiene algo mágico de noche. Hay bares con música en vivo, shows íntimos y lugares que solo descubrís si conocés a alguien...",
-    stars: 5,
-    avatar: "src/assets/images/image5.jpg",
-  },
-];
-
-import { useState } from "react";
+import { useUser } from "@clerk/clerk-react";
+import { useState, useEffect } from "react";
+import { useAppContext } from "../Context";
 
 const CommentSection = () => {
+  console.log("CommentSection rendered");
   const [input, setInput] = useState("");
+  const { direction } = useAppContext();
+
+  const [detalle, setDetalle] = useState("");
+  const { user } = useUser();
+  const comentarios = JSON.parse(
+    localStorage.getItem("comentarios-Palermo") || "[]"
+  );
+  // const handleComentario = () => {
+  //   console.log("handleComentario called");
+  //   console.log("Detalle:", detalle);
+  //   console.log("User:", user);
+  //   console.log("intentando guardar comentario:");
+
+  //   if (!detalle.trim() || !user) return;
+  //   guardarComentarioEnLocalStorage(
+  //     {
+  //       idUser: user.id,
+  //       detalle,
+  //       comuna: direction.comuna,
+  //       barrio: direction.barrio,
+  //     },
+  //     "barrio" // o "comuna" si querés agrupar por comuna
+  //   );
+
+  //   setDetalle(""); // limpiar input
+  //   alert("¡Comentario guardado!");
+  // };
+
+  const handleComentario = () => {
+  console.log("handleComentario called");
+  console.log("Detalle:", detalle);
+  console.log("User:", user);
+
+  if (!detalle.trim() || !user) return;
+
+  const nuevoComentario = {
+    idUser: user.id,
+    detalle,
+    comuna: direction.comuna,
+    barrio: direction.barrio,
+    name: user.fullName || user.username || "Usuario",
+    avatar: user.imageUrl,
+    comment: detalle,
+    date: new Date().toLocaleDateString("es-AR"),
+    stars: 4, // si no estás usando estrellas aún, podés dejar un valor fijo
+  };
+
+  guardarComentarioEnLocalStorage(nuevoComentario, "barrio");
+
+  // Actualiza directamente los comentarios en estado
+  const updated = JSON.parse(
+    localStorage.getItem(`comentarios-${direction.barrio}`) || "[]"
+  );
+  setComments(updated);
+
+  setDetalle(""); // limpiar input
+  alert("¡Comentario guardado!");
+
+  // Si querés seguir usando el evento personalizado (opcional)
+  window.dispatchEvent(new Event("comentario-agregado"));
+};
+
+  const [comments, setComments] = useState<any[]>([]);
+
+  // Función para leer localStorage
+  const cargarComentarios = () => {
+    const data = JSON.parse(
+      localStorage.getItem(`comentarios-${direction.barrio}`) || "[]"
+    );
+    setComments(data);
+  };
+
+  useEffect(() => {
+    // Cargar al montar el componente
+    cargarComentarios();
+
+    // Escuchar evento personalizado para actualizar al agregar uno nuevo
+    const handleUpdate = () => {
+      cargarComentarios();
+    };
+
+    window.addEventListener("comentario-agregado", handleUpdate);
+
+    return () => {
+      window.removeEventListener("comentario-agregado", handleUpdate);
+    };
+  }, [direction.barrio]);
 
   return (
     <div className="p-6">
@@ -38,7 +99,7 @@ const CommentSection = () => {
       <div className="flex items-start gap-4 mb-8">
         {/* Avatar */}
         <img
-          src="src/assets/images/image5.jpg"
+          src={user?.imageUrl}
           alt="User"
           className="w-10 h-10 rounded-full mt-1"
         />
@@ -49,10 +110,12 @@ const CommentSection = () => {
             type="text"
             className="w-full border rounded-full px-4 py-2 pr-24 focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Escribir un comentario"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={detalle}
+            onChange={(e) => setDetalle(e.target.value)}
           />
-          <button className="absolute top-1/2 -translate-y-1/2 right-2 bg-blue-500 text-white text-sm px-4 py-1.5 rounded-full hover:bg-blue-600 transition">
+          <button 
+              onClick={() => handleComentario()}          
+              className="absolute top-1/2 -translate-y-1/2 right-2 bg-blue-500 text-white text-sm px-4 py-1.5 rounded-full hover:bg-blue-600 transition">
             Comentar
           </button>
         </div>
@@ -88,3 +151,17 @@ const CommentSection = () => {
 };
 
 export default CommentSection;
+
+// Guardar el comentario bajo la key del barrio o comuna
+export const guardarComentarioEnLocalStorage = (
+  comentario: any,
+  usarKey: "barrio" | "comuna" = "barrio"
+) => {
+  const key = comentario[usarKey]; // Ej: "Palermo" o "Comuna 6"
+  const storageKey = `comentarios-${key}`;
+
+  const existentes = JSON.parse(localStorage.getItem(storageKey) || "[]");
+  const nuevos = [...existentes, comentario];
+
+  localStorage.setItem(storageKey, JSON.stringify(nuevos));
+};

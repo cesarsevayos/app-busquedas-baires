@@ -68,13 +68,13 @@ export const Map = () => {
     <div className="w-full h-full">
       <MapContainer
         //center={[-34.6037, -58.3816]}
-        center={[positionMap.lat, positionMap.lon]}
+        center={[-34.6037, -58.3816]}
         zoom={16}
         scrollWheelZoom={true}
         className="w-full h-full z-0"
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <Marker position={[positionMap.lat, positionMap.lon]}>
+        <Marker position={[-34.6037, -58.3816]}>
           <Popup>Buenos Aires</Popup>
         </Marker>
       </MapContainer>

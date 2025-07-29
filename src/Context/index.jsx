@@ -8,6 +8,8 @@ export const AppContextProvider = ({ children }) => {
   //   useState < [Number, Number] > [-34.6037, -58.3816]; // Buenos Aires default
   const [positionMap, setPositionMap] = useState({});
   const [openLogin, setOpenLogin] = useState(false);
+  const [direction, setDirection] = useState({});
+
   return (
     <AppContext.Provider
       value={{
@@ -15,6 +17,8 @@ export const AppContextProvider = ({ children }) => {
         setPositionMap,
         openLogin,
         setOpenLogin,
+        direction,
+        setDirection,
       }}
     >
       {children}
