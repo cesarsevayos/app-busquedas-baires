@@ -1,7 +1,7 @@
-import MainLayout from "../Layouts/MainLayout";
-import HeroSearch from "../Components/HeroSearch";
-import NeighborhoodCards from "../Components/NeighborhoodCards";
-import HowItWorks from "../Components/HowItWorks";
+import MainLayout from "../layouts/MainLayout";
+import HeroSearch from "../components/HeroSearch";
+import NeighborhoodCards from "../components/NeighborhoodCards";
+import HowItWorks from "../components/HowItWorks";
 
 const Page1 = () => {
   return (
