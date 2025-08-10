@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppContext } from "../Context";
+import { useAppContext } from "../context/context";
 import { useNavigate } from "react-router-dom";
 import useMap from "../hooks/useMap";
 
@@ -9,7 +9,7 @@ const HeroSearch = () => {
   const { getPositionMap } = useMap();
   const [query, setQuery] = useState("");
 
-  const searchDirection = async (value) => {
+  const searchDirection = async (value: string) => {
     const resp = await getPositionMap(value);
     if (resp) {
       setPositionMap(resp);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getMap } from "../app/services/map.services";
-import { useAppContext } from "../Context";
+import { useAppContext } from "../context/context";
 
 const useMap = () => {
   const { setPositionMap } = useAppContext();
