@@ -12,8 +12,8 @@ export const getAllBarrios = async () => {
 
 export const getLugaresPorBarrio = async (barrio: string) => {
   return (
-    lugaresPorBarrios.data.filter(
+    lugaresPorBarrios.data.find(
       (lugar) => lugar.barrio.toLowerCase() === barrio.toLowerCase()
-    ) || []
+    )
   );
 };

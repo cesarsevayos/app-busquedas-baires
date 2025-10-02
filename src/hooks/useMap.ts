@@ -9,10 +9,7 @@ const useMap = () => {
     console.log("Fetching map data for:", value);
     try {
       const data = await getMap(value);
-      return {
-        lat: data?.lat,
-        lon: data?.lon,
-      };
+      return data;
     } catch (error) {
       console.error("Error fetching map data:", error);
       return null;

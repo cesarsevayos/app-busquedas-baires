@@ -1,17 +1,18 @@
 import Box from "./Box";
-
-const imageList = [
-  { url: "src/assets/images/image4.png", title: "Palermo Hollywood" },
-  { url: "src/assets/images/image4.png", title: "Palermo Chico" },
-  { url: "src/assets/images/image4.png", title: "Palermo Nuevo" },
-  { url: "src/assets/images/image4.png", title: "Palermo Soho" },
-];
+import { useAppContext } from "../context/context";
 
 const ImageListSection = () => {
+  const { lugares } = useAppContext();
+
   return (
     <section className="flex flex-col gap-4 p-6 h-full">
-      {imageList.map((img, index) => (
-        <Box key={index} imageUrl={img.url} title={img.title} />
+      {lugares.map((item: any, index: any) => (
+        <Box
+          key={index}
+          imageUrl={item.image}
+          title={item.nombre}
+          description={item.detalle}
+        />
       ))}
     </section>
   );

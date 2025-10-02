@@ -17,6 +17,8 @@ export const getMap = async (search: string) => {
         lat,
         lon,
         displayName: data[0].display_name,
+        barrio:
+          data[0].address?.suburb || "Desconocido",
       };
     } else {
       throw new Error("Location not found");

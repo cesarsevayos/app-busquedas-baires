@@ -2,16 +2,21 @@ import { useState } from "react";
 import { useAppContext } from "../context/context";
 import { useNavigate } from "react-router-dom";
 import useMap from "../hooks/useMap";
+import useBarrios from "../hooks/useBarrios";
 
 const HeroSearch = () => {
   const navigate = useNavigate();
-  const { positionMap, setPositionMap } = useAppContext();
+  const { positionMap, setPositionMap, setLugares } = useAppContext();
   const { getPositionMap } = useMap();
+  const { getLugares } = useBarrios();
   const [query, setQuery] = useState("");
 
   const searchDirection = async (value: string) => {
     const resp = await getPositionMap(value);
     if (resp) {
+      await getLugares(resp.barrio);
+      const dataLugares = await getLugares(resp.barrio);
+      setLugares(dataLugares.lugares);
       setPositionMap(resp);
       navigate("/page2");
     } else {
