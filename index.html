@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/app-busquedas-baires/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bienvenido</title>
+    <script type="module" crossorigin src="/app-busquedas-baires/assets/index-CM1AQg3d.js"></script>
+    <link rel="stylesheet" crossorigin href="/app-busquedas-baires/assets/index-BzXDIfv7.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+<script>
+  document.addEventListener("mouseout", function(event) {
+    // Verificar si el cursor del mouse ha salido de la página
+    if (event.toElement === null && event.relatedTarget === null) {
+      // Cambiar el título del documento
+      document.title = "¡Adiós! Vuelve pronto 👋";
+    }
+  });
+  document.addEventListener("mouseover", function(event) {
+      // Verificar si el cursor del mouse ha vuelto a la página
+      if (event.fromElement === null && event.relatedTarget === null) {
+        // Restaurar el título del documento
+        document.title = "Bienvenido";
+      }
+    });
+</script>
