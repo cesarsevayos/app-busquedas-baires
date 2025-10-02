@@ -20,6 +20,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [barriosDestacados, setBarriosDestacados] = useState<any[]>([]);
   const [barrios, setBarrios] = useState<any[]>([]);
   const [lugares, setLugares] = useState<any[]>([]);0
+  const [barrioSelected, setBarrioSelected] = useState<any[]>([]);0
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +48,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setBarriosDestacados,
         lugares,
         setLugares,
+        barrioSelected,
+        setBarrioSelected,
       }}
     >
       {children}

@@ -1,9 +1,3 @@
-//Barrios destacados de Buenos Aires
-//Palermo
-//Puerto Madero
-//Recoleta
-//San Telmo
-
 export const barriosDestacados = {
   data: [
     {
@@ -24,15 +18,15 @@ export const barriosDestacados = {
     },
     {
       id: 28,
-      nombre: "Puerto Madero",
-      comuna: "Comuna 7",
+      nombre: "Belgrano",
+      comuna: "Comuna 2",
       municipio: "Ciudad Autónoma de Buenos Aires",
       provincia: "Buenos Aires",
       descripcion:
-        "Puerto Madero es un barrio característico de Buenos Aires, con identidad cultural y vida local.",
+        "Belgrano es un barrio característico de Buenos Aires, con identidad cultural y vida local.",
       coordenadas: {
-        lat: -34.572,
-        lon: -58.428,
+        lat: -34.5625,
+        lon: -58.4583,
       },
       image: "src/assets/images/image3.png",
       tags: ["cultura", "gastronomía", "historia"],
@@ -47,8 +41,8 @@ export const barriosDestacados = {
       descripcion:
         "Recoleta es un barrio característico de Buenos Aires, con identidad cultural y vida local.",
       coordenadas: {
-        lat: -34.571,
-        lon: -58.429,
+        lat: -34.5905,
+        lon: -58.3905,
       },
       image: "src/assets/images/image6.png",
       tags: ["cultura", "gastronomía", "historia"],

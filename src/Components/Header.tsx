@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
 import { ModalLogin } from "./ModalLogin";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   showSearch?: boolean;
@@ -9,11 +10,19 @@ interface HeaderProps {
 const Header = ({ showSearch = false }: HeaderProps) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const { isSignedIn, user } = useUser();
+  const navigate = useNavigate();
 
+  const goHome = () => {
+    navigate("/"); // Navega al path inicial
+  };
   return (
     <header className="h-16 flex items-center justify-between px-4 py-2 shadow border-b bg-white font-roboto">
-      <div className="text-lg font-bold">LOGO</div>
-
+      <span
+        onClick={goHome}
+        className="text-xl font-bold text-blue-600 hover:text-blue-800 cursor-pointer transition"
+      >
+        LOGO
+      </span>
       {showSearch && (
         <input
           type="text"

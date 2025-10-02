@@ -5,7 +5,7 @@ const ImageListSection = () => {
   const { lugares } = useAppContext();
 
   return (
-    <section className="flex flex-col gap-4 p-6 h-full">
+    <section className="h-full overflow-y-auto p-4 flex flex-col gap-4">
       {lugares.map((item: any, index: any) => (
         <Box
           key={index}

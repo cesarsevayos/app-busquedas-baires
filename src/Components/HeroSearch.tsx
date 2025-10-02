@@ -14,6 +14,7 @@ const HeroSearch = () => {
   const searchDirection = async (value: string) => {
     const resp = await getPositionMap(value);
     if (resp) {
+      console.log("barrioooooo:", resp);
       await getLugares(resp.barrio);
       const dataLugares = await getLugares(resp.barrio);
       setLugares(dataLugares.lugares);

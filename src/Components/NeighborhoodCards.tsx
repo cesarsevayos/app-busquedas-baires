@@ -3,13 +3,17 @@ import useBarrios from "../hooks/useBarrios";
 import { useNavigate } from "react-router-dom";
 
 const NeighborhoodCards = () => {
-  const { barriosDestacados, setLugares, setPositionMap } = useAppContext();
+  const { barriosDestacados, setLugares, setPositionMap, setBarrioSelected } = useAppContext();
   const { getLugares } = useBarrios();
   const navigate = useNavigate();
 
   const handleBarrioClick = async (barrio: any) => {
     const dataLugares = await getLugares(barrio.nombre);
+    console.log("barrioooo:", dataLugares);
     setLugares(dataLugares.lugares);
+    setBarrioSelected(barrio);
+    console.log("barrioooo:", barrio.nombre);
+
     setPositionMap({ lat: barrio.coordenadas.lat, lon: barrio.coordenadas.lon, barrio: barrio.nombre });
     navigate("/page2");
   };
